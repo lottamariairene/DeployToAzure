@@ -20,7 +20,7 @@ const addMember = function (req, res) {
                 res.status(400).json(err);
             }
             else{
-                res.status(200).json(newMember);
+                res.status(201).json(newMember);
             }
         }
     );
