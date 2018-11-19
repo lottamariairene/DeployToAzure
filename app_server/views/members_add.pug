@@ -1,0 +1,17 @@
+extends layout
+
+block content
+   .row
+     h4 New member
+   form(action= "", method="post")
+     .form-group.row
+       label Years
+         input.form-control(name="years")
+     .form-group.row
+       label Member
+         input.form-control(name="member")
+     .form-group.row
+       label Instrument
+         input.form-control(name="instrument")
+     .form-group.row
+       button.btn-primary Add

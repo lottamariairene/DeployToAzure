@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  .row
+    h4 New award
+  form(action="", method="post")
+    .form-group.row
+      label Year
+        input.form-control(name="year")
+    .form-group.row
+      label Nominee
+        input.form-control(name="nominee")
+    .form-group.row
+      label Award
+        input.form-control(name="award")
+    .form-group.row
+      button.btn-primary Add
+

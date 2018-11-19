@@ -11,4 +11,14 @@ router.get('/', ctrlMain.index);  // Home page
 router.get('/members', ctrlMembers.memberlist); //List of band members
 router.get('/awards', ctrlAwards.awardlist);  // List of awards
 
+router
+    .route('/members/add')
+    .get(ctrlMembers.showForm)
+    .post(ctrlMembers.addData);
+
+router
+    .route('/awards/add')
+    .get(ctrlAwards.showForm)
+    .post(ctrlAwards.addData);
+
 module.exports = router;

@@ -1,26 +1,69 @@
+const request = require('request');
+const apiURL = require('./apiURL');
 
-const awardlist = function(req, res){
-    res.render('awards',{
-        awards:
-        [
-            {year:'1997', nominee:'HIM', award:'Newcomer of the Year'},
-            {year:'1997', nominee:'Greatest Lovesongs Vol. 666', award:'Debut Album of the Year'},
-            {year:'1999', nominee:'HIM', award:'Export of the Year'},
-            {year:'2000', nominee:'HIM', award:'Band of the Year'},
-            {year:'2000', nominee:'Razorblade Romance', award:'Album of the Year'},
-            {year:'2000', nominee:'HIM', award:'Viewers Choice Award'},
-            {year:'2000', nominee:'Join Me in Death', award:'Video of the Year'},
-            {year:'2001', nominee:'HIM', award:'Export of the Year'},
-            {year:'2001', nominee:'HIM', award:'Viewers Choice Award'},
-            {year:'2004', nominee:'The Funeral of Hearts', award:'Best Video'},
-            {year:'2004', nominee:'Razorblade Romance', award:'IFPI Platinum Europe Award'},
-            {year:'2005', nominee:'Dark Light', award:'Rock Album of the Year'},
-            {year:'2005', nominee:'Wings of a Butterfly', award:'Song of the Year'},
-            {year:'2013', nominee:'HIM', award:'Most Dedicated Fans'},
-            {year:'2014', nominee:'Into the Night', award:'Video of the Year'}
-        ]});
+const showForm = function(req, res) {
+    res.render('awards_add');
 };
 
+const addData = function(req, res) {
+    const path = 'api/awards';
+
+    const postdata = {
+        year: req.body.year,
+        member: req.body.nominee,
+        instrument: req.body.award
+    };
+
+    const requestOptions = {
+        url: apiURL.server + path,
+        method: 'POST',
+        json: postdata
+    };
+
+    request(
+        requestOptions,
+        function (err, response) {
+            if (response.statusCode === 201) {
+                res.redirect('/awards');
+            } else {
+                res.render('error', {message: 'Error adding data: ' +
+                        response.statusMessage +
+                        ' (' + response.statusCode + ')'});
+            }
+        }
+    );
+};
+
+const awardlist = function(req, res) {
+    const path = '/api/awards';
+    const requestOptions = {
+        url : apiURL.server + path,
+        method : 'GET',
+        json : {},
+        qs : {}
+
+    };
+
+    request(
+        requestOptions,
+        function(err, response, body) {
+            if (err) {
+                res.render('error', {message: err.message});
+            } else if (response.statusCode !== 200) {
+                res.render('error', {message: 'Error accessing API: ' + response.statusMessage + " ("+ response.statusCode + ")" });
+            }else if (! (body instanceof Array)) {
+                res.render('error', {message: 'Unexpected response data'});
+            }else if (!body.length) {
+                res.render('error', {message: 'No documents in collection'});
+            }else {
+                res.render('awards', {awards: body});
+            }
+        }
+
+    );
+};
 module.exports = {
-    awardlist
+    awardlist,
+    showForm,
+    addData
 };
