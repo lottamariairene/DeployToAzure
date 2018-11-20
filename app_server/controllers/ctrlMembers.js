@@ -39,7 +39,7 @@ const addData = function(req, res) {
 const memberlist = function(req, res) {
     const path = '/api/members';
     const requestOptions = {
-        url : 'http://localhost:3000' + path,
+        url : apiURL.server + path,
         method : 'GET',
         json : {},
         qs : {}
