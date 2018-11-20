@@ -15,7 +15,7 @@ const addData = function(req, res) {
     };
 
     const requestOptions = {
-        url: 'http://localhost:3000' +path,
+        url: apiURL.server + path,
         method: 'POST',
         json: postdata
     };
