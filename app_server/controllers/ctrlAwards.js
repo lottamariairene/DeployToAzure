@@ -6,12 +6,12 @@ const showForm = function(req, res) {
 };
 
 const addData = function(req, res) {
-    const path = 'api/awards';
+    const path = '/api/awards';
 
     const postdata = {
         year: req.body.year,
-        member: req.body.nominee,
-        instrument: req.body.award
+        nominee: req.body.nominee,
+        award: req.body.award
     };
 
     const requestOptions = {

@@ -6,23 +6,23 @@ const showForm = function(req, res) {
 };
 
 const addData = function(req, res) {
-    const path = 'api/members';
+    const path = '/api/members';
 
     const postdata = {
-        year: req.body.years,
+        years: req.body.years,
         member: req.body.member,
         instrument: req.body.instrument
     };
 
     const requestOptions = {
-        url: apiURL.server + path,
+        url: 'http://localhost:3000' +path,
         method: 'POST',
         json: postdata
     };
 
     request(
         requestOptions,
-        function (err, response, ) {
+        function (err, response ) {
             if (response.statusCode === 201) {
                 res.redirect('/members');
             } else {
@@ -39,7 +39,7 @@ const addData = function(req, res) {
 const memberlist = function(req, res) {
     const path = '/api/members';
     const requestOptions = {
-        url : apiURL.server + path,
+        url : 'http://localhost:3000' + path,
         method : 'GET',
         json : {},
         qs : {}
@@ -51,7 +51,7 @@ const memberlist = function(req, res) {
         function(err, response, body) {
             if (err) {
                 res.render('error', {message: err.message});
-            } else if (response.statusCode != 200) {
+            } else if (response.statusCode !== 200) {
                 res.render('error', {message: 'Error accessing API: ' + response.statusMessage + " ("+ response.statusCode + ")" });
             }else if (! (body instanceof Array)) {
                 res.render('error', {message: 'Unexpected response data'});
